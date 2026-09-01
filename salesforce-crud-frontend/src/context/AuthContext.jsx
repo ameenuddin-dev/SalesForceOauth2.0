@@ -25,15 +25,13 @@ export const AuthProvider = ({ children }) => {
 
       if (response?.authenticated) {
         setUser(response.user);
-
         return true;
       }
 
       setUser(null);
-
       return false;
     } catch (error) {
-      console.error("AUTH CHECK ERROR:", error.response?.data || error.message);
+      console.log("NOT AUTHENTICATED:", error.response?.data || error.message);
 
       setUser(null);
 
@@ -47,8 +45,17 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, [checkAuth]);
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    try {
+      await authApi.logout();
+
+      console.log("Backend logout successful");
+    } catch (error) {
+      console.error("LOGOUT ERROR:", error.response?.data || error.message);
+    } finally {
+      // Always clear React authentication state
+      setUser(null);
+    }
   };
 
   return (

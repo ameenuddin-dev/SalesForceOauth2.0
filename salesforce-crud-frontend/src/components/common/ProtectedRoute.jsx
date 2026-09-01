@@ -1,3 +1,23 @@
-import {Navigate} from 'react-router-dom';
-import {useAuth} from '../../context/AuthContext';
-export default function ProtectedRoute({children}){const {user,loading}=useAuth();if(loading)return <div className="flex min-h-screen items-center justify-center text-slate-500">Checking authentication...</div>;return user?children:<Navigate to="/login" replace/>}
+import { Navigate } from "react-router-dom";
+
+import { useAuth } from "../../context/AuthContext";
+
+const ProtectedRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-sm text-slate-500">Checking authentication...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
+export default ProtectedRoute;
