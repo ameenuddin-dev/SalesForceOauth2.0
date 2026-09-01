@@ -165,7 +165,6 @@ export default function Dashboard() {
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6">
           {/* Brand */}
-
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
               <Database size={21} />
@@ -179,43 +178,73 @@ export default function Dashboard() {
               <p className="text-xs text-slate-500">CRM Data Management</p>
             </div>
           </div>
-
           {/* Right side */}
-
-          <div className="flex items-center gap-4">
-            {/* Connection status */}
-
+          <div className="flex items-center gap-3">
+            {/* Connection Status */}
             <div className="hidden items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 sm:flex">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
 
-              <span className="text-xs font-medium text-emerald-700">
+              <span className="text-xs font-semibold text-emerald-700">
                 Salesforce Connected
               </span>
             </div>
 
-            {/* User */}
+            {/* User Email */}
+            <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
+              {/* Avatar */}
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
+                {user?.salesforceUser?.email?.charAt(0)?.toUpperCase() || "U"}
+              </div>
 
-            <div className="flex items-center gap-3 border-l border-slate-200 pl-4">
-              <div className="hidden text-right sm:block">
-                <p className="text-sm font-semibold text-slate-800">
-                  Salesforce User
+              {/* Email */}
+              <div className="hidden min-w-0 sm:block">
+                <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400">
+                  Signed in as
                 </p>
 
-                <p className="text-xs text-slate-500">Active session</p>
+                <p className="max-w-[220px] truncate text-sm font-semibold text-slate-700">
+                  {user?.salesforceUser?.email || "Salesforce User"}
+                </p>
               </div>
 
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                SF
+              {/* Mobile Email Icon */}
+              <div className="sm:hidden">
+                <span className="text-sm font-medium text-slate-700">
+                  {user?.salesforceUser?.email?.split("@")[0] || "User"}
+                </span>
               </div>
-
-              <button
-                onClick={handleLogout}
-                className="rounded-lg p-2 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
-                title="Logout"
-              >
-                <LogOut size={18} />
-              </button>
             </div>
+
+            {/* Logout */}
+            <button
+              onClick={handleLogout}
+              className="group flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 shadow-sm transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-600 hover:shadow-md"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M18 15l3-3m0 0l-3-3m3 3H9"
+                />
+              </svg>
+
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </header>
