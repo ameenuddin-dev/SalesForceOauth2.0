@@ -57,12 +57,13 @@ export default function Dashboard() {
     deleteRecord,
   } = useSalesforceRecords(object);
 
-  const handleLogout = () => {
-    logout();
-
+  const handleLogout = async () => {
+    await logout();
     toast.success("Logged out successfully");
 
-    navigate("/login");
+    nav("/login", {
+      replace: true,
+    });
   };
 
   const handleCreate = () => {
