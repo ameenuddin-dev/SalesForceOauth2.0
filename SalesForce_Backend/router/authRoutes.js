@@ -9,6 +9,12 @@ const {
   logout,
 } = require("../controller/authController");
 
+router.get("/test", (req, res) => {
+  res.json({
+    message: "Auth router works",
+  });
+});
+
 // LOGIN
 router.get("/login", login);
 
