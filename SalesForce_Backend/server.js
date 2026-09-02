@@ -38,19 +38,6 @@ app.use(
 
 app.use(express.json());
 
-app.get("/test", (req, res) => {
-  res.json({
-    message: "Backend is working",
-  });
-});
-
-app.get("/auth-test", (req, res) => {
-  res.json({
-    message: "Auth test works",
-  });
-});
-
-app.use("/auth", authRoutes);
 // Authentication routes
 app.use("/auth", authRoutes);
 

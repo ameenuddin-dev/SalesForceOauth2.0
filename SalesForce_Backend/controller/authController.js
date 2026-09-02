@@ -10,22 +10,73 @@ const { AUTHORIZATION_URL, TOKEN_URL } = require("../utils/salesforceConfig");
 const { generateToken, verifyToken } = require("../utils/jwt");
 
 // LOGIN
+// async function login(req, res) {
+//   try {
+//     const codeVerifier = generateCodeVerifier();
+
+//     const codeChallenge = generateCodeChallenge(codeVerifier);
+
+//     req.session.codeVerifier = codeVerifier;
+
+//     console.log("LOGIN SESSION ID:", req.sessionID);
+
+//     req.session.save((err) => {
+//       if (err) {
+//         console.error("Session save error:", err);
+
+//         return res.status(500).send("Session save failed");
+//       }
+
+//       const authUrl =
+//         `${AUTHORIZATION_URL}?response_type=code` +
+//         `&client_id=${encodeURIComponent(process.env.CLIENT_ID)}` +
+//         `&redirect_uri=${encodeURIComponent(process.env.REDIRECT_URI)}` +
+//         `&code_challenge=${encodeURIComponent(codeChallenge)}` +
+//         `&code_challenge_method=S256`;
+
+//       return res.redirect(authUrl);
+//     });
+//   } catch (error) {
+//     console.error("Login Error:", error.message);
+
+//     res.status(500).json({
+//       message: "Login failed",
+//       error: error.message,
+//     });
+//   }
+// }
+
 async function login(req, res) {
   try {
+    console.log("========== LOGIN START ==========");
+
+    console.log("CLIENT_ID EXISTS:", !!process.env.CLIENT_ID);
+    console.log("REDIRECT_URI:", process.env.REDIRECT_URI);
+
     const codeVerifier = generateCodeVerifier();
+
+    console.log("CODE VERIFIER CREATED:", !!codeVerifier);
 
     const codeChallenge = generateCodeChallenge(codeVerifier);
 
+    console.log("CODE CHALLENGE CREATED:", !!codeChallenge);
+
     req.session.codeVerifier = codeVerifier;
 
-    console.log("LOGIN SESSION ID:", req.sessionID);
+    console.log("SESSION ID:", req.sessionID);
+    console.log("VERIFIER SAVED TO SESSION");
 
     req.session.save((err) => {
       if (err) {
-        console.error("Session save error:", err);
+        console.error("SESSION SAVE ERROR:", err);
 
-        return res.status(500).send("Session save failed");
+        return res.status(500).json({
+          message: "Session save failed",
+          error: err.message,
+        });
       }
+
+      console.log("SESSION SAVED SUCCESSFULLY");
 
       const authUrl =
         `${AUTHORIZATION_URL}?response_type=code` +
@@ -34,12 +85,15 @@ async function login(req, res) {
         `&code_challenge=${encodeURIComponent(codeChallenge)}` +
         `&code_challenge_method=S256`;
 
+      console.log("SALESFORCE AUTH URL CREATED");
+      console.log("REDIRECTING TO SALESFORCE");
+
       return res.redirect(authUrl);
     });
   } catch (error) {
-    console.error("Login Error:", error.message);
+    console.error("LOGIN ERROR:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Login failed",
       error: error.message,
     });
