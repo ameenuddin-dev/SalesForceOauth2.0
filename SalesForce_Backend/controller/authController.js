@@ -129,13 +129,13 @@ async function callback(req, res) {
       res.cookie("authToken", token, {
         httpOnly: true,
         secure: false,
-        sameSite: "lax",
+        sameSite: "none",
       });
 
       console.log("AUTH COOKIE CREATED");
 
       // 7. Redirect frontend
-      return res.redirect("https://sales-force-oauth2-0.vercel.app/dashboard");
+      return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
     });
   } catch (error) {
     console.error("SALESFORCE ERROR:", error.response?.data || error.message);
