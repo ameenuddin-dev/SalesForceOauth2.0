@@ -184,7 +184,7 @@ async function callback(req, res) {
       // 6. Store JWT in HttpOnly cookie
       res.cookie("authToken", token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "none",
       });
 
