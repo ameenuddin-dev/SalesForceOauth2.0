@@ -44,6 +44,11 @@ app.use("/auth", authRoutes);
 // Salesforce API routes
 app.use("/", salesforceRoutes);
 
+app.get("/test", (req, res) => {
+  res.json({
+    message: "Backend is working",
+  });
+});
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
