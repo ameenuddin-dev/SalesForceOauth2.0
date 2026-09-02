@@ -37,7 +37,9 @@ app.use(
 );
 
 app.use(express.json());
-
+router.get("/test", (req, res) => {
+  res.json({ message: "Auth router works" });
+});
 // Authentication routes
 app.use("/auth", authRoutes);
 
