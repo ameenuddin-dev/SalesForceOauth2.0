@@ -16,7 +16,12 @@ router.get("/test", (req, res) => {
 });
 
 // LOGIN
-router.get("/login", login);
+// router.get("/login", login);
+router.get("/login", (req, res) => {
+  res.json({
+    message: "Login route works",
+  });
+});
 
 //logout
 router.post("/logout", logout);
