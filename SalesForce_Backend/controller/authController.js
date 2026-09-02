@@ -85,7 +85,9 @@ async function login(req, res) {
         `&code_challenge=${encodeURIComponent(codeChallenge)}` +
         `&code_challenge_method=S256`;
 
-      console.log("SALESFORCE AUTH URL CREATED");
+      console.log("SALESFORCE AUTH URL:");
+      console.log(authUrl);
+
       console.log("REDIRECTING TO SALESFORCE");
 
       return res.redirect(authUrl);
