@@ -135,7 +135,7 @@ async function callback(req, res) {
       console.log("AUTH COOKIE CREATED");
 
       // 7. Redirect frontend
-      return res.redirect("http://localhost:3000/dashboard");
+      return res.redirect("https://sales-force-oauth2-0.vercel.app/dashboard");
     });
   } catch (error) {
     console.error("SALESFORCE ERROR:", error.response?.data || error.message);
